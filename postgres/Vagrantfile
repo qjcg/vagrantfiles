@@ -1,0 +1,23 @@
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+	config.vm.define "pgsrv" do |pgsrv|
+		pgsrv.vm.box = "ubuntu/trusty64"
+		pgsrv.vm.hostname =  "pgsrv"
+		pgsrv.vm.network "private_network", ip: "10.13.37.11/24"
+
+		pgsrv.vm.provider "virtualbox" do |vb|
+			vb.gui = false
+			vb.memory = "1024"
+		end
+
+		# as described here: http://www.postgresql.org/download/linux/ubuntu/
+		pgsrv.vm.provision "shell", inline: <<-SHELL
+			echo 'deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' > /etc/apt/sources.list.d/pgdg.list
+			wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - 
+			apt-get update
+			apt-get install -y postgresql-9.4 postgresql-client-9.4
+			apt-get install -y git
+		SHELL
+	end
+end
