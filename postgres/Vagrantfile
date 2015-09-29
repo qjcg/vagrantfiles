@@ -4,7 +4,9 @@ Vagrant.configure(2) do |config|
 	config.vm.define "pgsrv" do |pgsrv|
 		pgsrv.vm.box = "ubuntu/trusty64"
 		pgsrv.vm.hostname =  "pgsrv"
+
 		pgsrv.vm.network "private_network", ip: "10.13.37.11/24"
+		pgsrv.vm.network "forwarded_port", guest: 5432, host: 15432
 
 		pgsrv.vm.provider "virtualbox" do |vb|
 			vb.gui = false
