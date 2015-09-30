@@ -1,0 +1,19 @@
+# vim: ft=ruby
+$count=2
+
+Vagrant.configure(2) do |config|
+	(1..$count).each do |i|
+		name = "%s-%d" % ["box", i]
+
+		config.vm.define name do |node|
+			node.vm.box = "centos/7"
+			node.vm.hostname = name
+			node.vm.network "private_network", ip: "10.13.37.#{10 + i}"
+
+			node.vm.provision "shell", inline: <<-SHELL
+				yum update -y
+				yum install -y git tree
+			SHELL
+		end
+	end
+end
