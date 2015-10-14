@@ -1,0 +1,60 @@
+$nubuntu = 1
+$ncentos = 1
+
+Vagrant.configure(2) do |config|
+	# ubuntu
+	(1..$nubuntu).each do |i|
+		name = "%s%d" % ["ubuntu", i]
+		config.vm.define name, autostart: false do |u|
+			u.vm.box = "ubuntu/trusty64"
+			u.vm.hostname = name
+			u.vm.network "private_network", ip: "172.16.189.#{110 + i}"
+
+			u.vm.provider "virtualbox" do |vb|
+				vb.gui = false
+				vb.memory = "512"
+			end
+		end
+	end
+
+	# centos
+	(1..$ncentos).each do |i|
+		name = "%s%d" % ["centos", i]
+		config.vm.define name, autostart: false do |c|
+			c.vm.box = "centos/7"
+			c.vm.hostname = name
+			c.vm.network "private_network", ip: "172.16.189.#{120 + i}"
+
+			c.vm.provider "virtualbox" do |vb|
+				vb.gui = false
+				vb.memory = "512"
+			end
+
+			c.vm.provision "shell", inline: <<-SHELL
+				yum install -y epel-release bind-utils docker git mtr tmux tree vim bzip2
+			SHELL
+		end
+	end
+
+	# metasploitable
+	config.vm.define "metasploitable", autostart: false do |m|
+		m.vm.box = "blackfin/metasploitable"
+		m.vm.network "private_network", ip: "172.16.189.131", :adapter => 2
+
+		m.vm.provider "virtualbox" do |vb|
+			vb.gui = false
+			vb.memory = "512"
+		end
+	end
+
+	# kali
+	config.vm.define "kali", autostart: false do |k|
+		k.vm.box = "starflame/kali2_linux4.0.0_amd64"
+		k.vm.network "private_network", ip: "172.16.189.141"
+		k.vm.boot_timeout = 9999
+		k.vm.provider "virtualbox" do |vb|
+			vb.gui = true
+			vb.memory = "2048"
+		end
+	end
+end
