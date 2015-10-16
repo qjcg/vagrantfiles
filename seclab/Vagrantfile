@@ -41,21 +41,27 @@ Vagrant.configure(2) do |config|
 		end
 	end
 
-	# metasploitable
-	config.vm.define "metasploitable", autostart: false do |m|
-		config.ssh.username = "vagrant"
-		config.ssh.password = "vagrant"
-		# due to a "feature" of metasploitable
-		config.ssh.insert_key = false
-		m.vm.box = "blackfin/metasploitable"
-		m.vm.guest = :ubuntu
-		# FIXME: netmask not being applied, end up with a /16
-		m.vm.network "private_network", ip: "172.16.189.131", :adapter => 3, :netmask => "255.255.255.0"
-		m.vm.boot_timeout = 30
+	# metasploitable 2
+	# via https://github.com/waratek/vagrant-boxes/blob/master/Vagrantfiles/metasploitable2/Vagrantfile
+	config.vm.define "metasploitable2", autostart: false do |m|
+		m.vm.box = "metasploitable2"
+		m.vm.hostname = "metasploitable2"
+		m.vm.box_url = "https://s3-eu-west-1.amazonaws.com/waratek-vagrant-boxes/metasploitable2_virtualbox.box"
+		m.vm.box_download_checksum = "feacd783225859336ef3dc9ca620a5c3"
+		m.vm.box_download_checksum_type = "md5"
+		m.vm.guest = "ubuntu"
+		m.vm.network "private_network", ip: "172.16.189.131", :adapter => 3
 
 		m.vm.provider "virtualbox" do |vb|
-			vb.gui = false
-			vb.memory = "512"
+			vb.customize ["modifyvm", :id, "--biosbootmenu", "disabled"]
+			vb.customize ["modifyvm", :id, "--bioslogodisplaytime", "0"]
+			vb.customize ["modifyvm", :id, "--bioslogofadein", "off"]
+			vb.customize ["modifyvm", :id, "--bioslogofadeout", "off"]
+			vb.customize ["modifyvm", :id, "--cpus", "2"]
+			vb.customize ["modifyvm", :id, "--ioapic", "on"]
+			vb.customize ["modifyvm", :id, "--memory", "512"]
+			vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
+			vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
 		end
 	end
 
