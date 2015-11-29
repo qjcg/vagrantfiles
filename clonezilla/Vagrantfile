@@ -1,0 +1,35 @@
+# WORK IN PROGRESS (CURRENTLY NOT FUNCTIONAL)
+
+$nclient = 1
+$private_net_base = "172.16.0"
+$clonezilla_iso_url = "http://sourceforge.net/projects/clonezilla/files/clonezilla_live_stable/2.4.2-61/clonezilla-live-2.4.2-61-amd64.iso/download"
+
+Vagrant.configure(2) do |config|
+	config.vm.define "clonezilla" do |cz|
+		cz.vm.box = "debian/jessie64"
+		cz.vm.hostname = "clonezilla"
+		cz.vm.network "private_network", ip: "#{private_net_base}.10/24"
+
+		# Follow instructions here: http://clonezilla.org/livehd.php
+		# TODO: add grub menuentry, update-grub
+		cz.vm.provision "shell", inline: <<-END
+			curl -LO #{clonezilla_iso_url}
+		END
+	end
+
+	# FIXME: should be blank machines w/ disk attach, ready for install
+	(1..$nclient).each do |i|
+		name = "%s%d" % ["ubuntu", i]
+		config.vm.define name, autostart: false do |u|
+			u.vm.box = "ubuntu/trusty64"
+			u.vm.hostname = name
+			u.vm.network "private_network", ip: "#{private_net_base}.#{20 + i}"
+			u.vm.boot_timeout = 60
+
+			u.vm.provider "virtualbox" do |vb|
+				vb.gui = false
+				vb.memory = "512"
+			end
+		end
+	end
+end
