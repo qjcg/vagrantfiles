@@ -13,6 +13,6 @@ Vagrant.configure(2) do |config|
 	config.vm.provision "shell", inline: <<-END
 		usermod -s /bin/bash root
 		opkg update
-		opkg install vim-full python-light
+		opkg install vim-full python-light ip
 	END
 end
