@@ -10,9 +10,15 @@ Vagrant.configure(2) do |config|
 		vb.customize ["modifyvm", :id, "--usb", "off"]
 	end
 
-	config.vm.provision "shell", inline: <<-END
-		usermod -s /bin/bash root
-		opkg update
-		opkg install vim-full python-light ip
-	END
+	#config.vm.provision "shell", inline: <<-END
+	#	usermod -s /bin/bash root
+	#	opkg update
+	#	opkg install vim-full python-light ip
+	#END
+
+	config.vm.provision "ansible" do |ans|
+		ans.playbook = "playbook.yml"
+		ans.extra_vars = { ansible_ssh_user: 'vagrant' }
+		ans.sudo = true
+	end
 end

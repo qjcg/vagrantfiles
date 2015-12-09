@@ -1,0 +1,12 @@
+---
+- hosts: all
+
+  tasks:
+    - name: Ping
+      ping:
+
+    - name: Set up user jerry
+      user: name=jerry
+
+    - name: Set up user jackie
+      user: name=jackie
