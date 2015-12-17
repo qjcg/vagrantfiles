@@ -1,19 +1,50 @@
 # vim: ft=ruby
 $count=2
+$disk_mb = 100
 
 Vagrant.configure(2) do |config|
 	(1..$count).each do |i|
-		name = "%s%d" % ["box", i]
+		name = "box#{i}"
 
 		config.vm.define name do |node|
 			node.vm.box = "centos/7"
 			node.vm.hostname = name
 			node.vm.network "private_network", ip: "10.13.37.#{10 + i}"
 
-			node.vm.provision "shell", inline: <<-SHELL
-				yum install -y epel-release
-				yum install -y bind-utils docker git mtr tmux tree vim bzip2
-			SHELL
+			node.vm.provider "virtualbox" do |vb|
+				# TODO: use https://github.com/kusnier/vagrant-persistent-storage
+				disk_name = "#{name}_extradisk.vdi"
+				controller_name = "#{name}_sata_controller"
+
+				# create extra disk
+				if ARGV[0] == "up" && ! File.exist?(disk_name)
+					vb.customize [
+						"storagectl", :id,
+						"--name", controller_name,
+						"--add", "sata"
+					]
+
+					vb.customize [
+						'createhd',
+						'--filename', disk_name,
+						'--size', $disk_mb * 1024
+					]
+
+					vb.customize [
+						'storageattach', :id,
+						'--storagectl', controller_name,
+						'--port', 1,
+						'--device', 0,
+						'--type', 'hdd',
+						'--medium', disk_name
+					]
+				end
+			end
+
+			#node.vm.provision "shell", inline: <<-SHELL
+			#	yum install -y epel-release
+			#	yum install -y bind-utils docker git mtr tmux tree vim bzip2
+			#SHELL
 		end
 	end
 end
