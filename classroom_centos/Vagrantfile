@@ -17,6 +17,7 @@ Vagrant.configure(2) do |config|
 			# `vagrant plugin install vagrant-persistent-storage`
 			node.persistent_storage.enabled = true
 			node.persistent_storage.location = disk_name
+			# size in megabytes
 			node.persistent_storage.size = 100
 			node.persistent_storage.mountname = 'extradisk'
 			node.persistent_storage.filesystem = 'ext4'
