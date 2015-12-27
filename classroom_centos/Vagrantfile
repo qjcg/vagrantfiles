@@ -18,7 +18,7 @@ Vagrant.configure(2) do |config|
 			node.persistent_storage.enabled = true
 			node.persistent_storage.location = disk_name
 			# size in megabytes
-			node.persistent_storage.size = 100
+			node.persistent_storage.size = $disk_mb
 			node.persistent_storage.mountname = 'extradisk'
 			node.persistent_storage.filesystem = 'ext4'
 			node.persistent_storage.mountpoint = '/var/lib/extradisk'
