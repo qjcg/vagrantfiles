@@ -1,32 +1,37 @@
-$nmachines=2
-$lan_prefix = "10.13.37"
+NMACHINES=2
+LAN_PREFIX = "10.13.37"
 
 # Enable extra disk (for testing partitioning, LVM, etc)
 # See https://github.com/kusnier/vagrant-persistent-storage
-$extra_disk = true
-$extra_disk_mb = 100
-$extra_disk_plname = "vagrant-persistent-storage"
+DISK = true
+DISK_MB = 100
+DISK_PLUGIN = "vagrant-persistent-storage"
+
+# via http://stackoverflow.com/a/28801317
+unless Vagrant.has_plugin?(DISK_PLUGIN)
+	# install plugin
+	if system "vagrant plugin install #{DISK_PLUGIN}"
+		# if plugin installed successfully, restart vagrant (with plugin now available)
+		exec "vagrant #{ARGV.join(' ')}"
+	end
+end
 
 
 Vagrant.configure(2) do |config|
-	(1..$nmachines).each do |i|
+	(1..NMACHINES).each do |i|
 		name = "box#{i}"
 
 		config.vm.define name do |node|
 			node.vm.box = "centos/7"
 			node.vm.hostname = name
-			node.vm.network "private_network", ip: "#{$lan_prefix}.#{10 + i}"
+			node.vm.network "private_network", ip: "#{LAN_PREFIX}.#{10 + i}"
 
-			if $extra_disk
-				unless Vagrant.has_plugin?($extra_disk_plname)
-					system "vagrant plugin install #{$extra_disk_plname}"
-				end
-
+			if DISK
 				node.persistent_storage.enabled = true
 				node.persistent_storage.use_lvm = false
 				node.persistent_storage.format = false
 				node.persistent_storage.manage = false
-				node.persistent_storage.size = $extra_disk_mb
+				node.persistent_storage.size = DISK_MB
 				node.persistent_storage.location = "#{name}_extradisk.vdi"
 			end
 
