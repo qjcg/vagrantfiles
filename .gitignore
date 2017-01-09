@@ -3,4 +3,4 @@
 Session.vim
 .vagrant
 *.vdi
-
+*.log
