@@ -1,0 +1,37 @@
+$ip_net = "10.7.7"
+# Starting *host* octet of VM ip addresses (/24), will be incremented.
+$ip_host = 10
+hosts = {
+	"centos" => {"boxes" => 1, "mem" => "512", "box" => "centos/7"},
+	"ubuntu" => {"boxes" => 0, "mem" => "512", "box" => "ubuntu/xenial64"},
+	"debian" => {"boxes" => 0, "mem" => "512", "box" => "debian/jessie64"},
+	"opensuse" => {"boxes" => 0, "mem" => "512", "box" => "opensuse/openSUSE-42.1-x86_64"},
+	"openwrt" => {"boxes" => 0, "mem" => "512", "box" => "ntrepid8/openwrt-15.05-x86"},
+	"arch" => {"boxes" => 0, "mem" => "512", "box" => "kaorimatz/archlinux-x86_64"},
+}
+
+Vagrant.configure(2) do |config|
+
+
+	hosts.each do |k, v|
+		(1..v["boxes"]).each do |i|
+			name = "%s%d" % [k, i]
+
+			config.vm.define name do |u|
+				u.vm.box = v["box"]
+				u.vm.hostname = name
+				u.vm.network "private_network", ip: "%s.%d" % [$ip_net, $ip_host], :adapter => 3
+				#u.vm.boot_timeout = 60
+
+				u.vm.provider "virtualbox" do |vb|
+					vb.linked_clone = true
+					vb.gui = false
+					vb.memory = v["mem"]
+				end
+			end
+
+			# Increment ip_host for next VM created.
+			$ip_host += 1
+		end
+	end
+end
