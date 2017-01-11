@@ -8,6 +8,7 @@ hosts = {
 	"opensuse" => {"boxes" => 0, "mem" => "512", "box" => "opensuse/openSUSE-42.1-x86_64"},
 	"openwrt" => {"boxes" => 0, "mem" => "512", "box" => "ntrepid8/openwrt-15.05-x86"},
 	"arch" => {"boxes" => 0, "mem" => "512", "box" => "kaorimatz/archlinux-x86_64"},
+	"fedora" => {"boxes" => 0, "mem" => "512", "box" => "fedora/25-cloud-base"},
 }
 
 Vagrant.configure(2) do |config|
