@@ -1,4 +1,4 @@
-$ip_net = "10.7.7"
+$ip_net = "192.168.77"
 # Starting *host* octet of VM ip addresses (/24), will be incremented.
 $ip_host = 10
 hosts = {
@@ -13,26 +13,43 @@ hosts = {
 
 Vagrant.configure(2) do |config|
 
+	hosts.each do |distro, v|
 
-	hosts.each do |k, v|
+		# Immediately continue to next host type if number of boxes is zero.
+		# Avoids incrementing $ip_host needlessly.
+		if v["boxes"] == 0
+			next
+		end
+
 		(1..v["boxes"]).each do |i|
-			name = "%s%d" % [k, i]
+			name = "%s%d" % [distro, i]
 
 			config.vm.define name do |u|
 				u.vm.box = v["box"]
 				u.vm.hostname = name
-				u.vm.network "private_network", ip: "%s.%d" % [$ip_net, $ip_host], :adapter => 3
-				#u.vm.boot_timeout = 60
+				u.vm.network "private_network", ip: "%s.%d" % [$ip_net, $ip_host]
 
 				u.vm.provider "virtualbox" do |vb|
 					vb.linked_clone = true
 					vb.gui = false
 					vb.memory = v["mem"]
 				end
-			end
 
-			# Increment ip_host for next VM created.
-			$ip_host += 1
+				if distro == "centos"
+					u.vm.provision "shell", inline: <<-SHELL
+						# CENTOS ONLY
+						# Work around CentOS network config issue (vagrant issue 5590)
+						# https://github.com/mitchellh/vagrant/issues/5590#issuecomment-105886361
+						echo '/usr/sbin/ifup eth1' >> /etc/rc.local
+
+						# Install packages
+						yum install -y bind-utils tree vim httpd httpd-tools mod_ssl php php-fpm
+					SHELL
+				end
+
+				# Increment ip_host for next VM created.
+				$ip_host += 1
+			end
 		end
 	end
 end
