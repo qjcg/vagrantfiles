@@ -1,54 +1,53 @@
-$ip_net = "192.168.77"
-# Starting *host* octet of VM ip addresses (/24), will be incremented.
-$ip_host = 10
 hosts = {
-	"centos" => {"boxes" => 1, "mem" => "512", "box" => "centos/7"},
-	"ubuntu" => {"boxes" => 0, "mem" => "512", "box" => "ubuntu/xenial64"},
-	"debian" => {"boxes" => 0, "mem" => "512", "box" => "debian/jessie64"},
-	"opensuse" => {"boxes" => 0, "mem" => "512", "box" => "opensuse/openSUSE-42.1-x86_64"},
-	"openwrt" => {"boxes" => 0, "mem" => "512", "box" => "ntrepid8/openwrt-15.05-x86"},
-	"arch" => {"boxes" => 0, "mem" => "512", "box" => "kaorimatz/archlinux-x86_64"},
-	"fedora" => {"boxes" => 0, "mem" => "512", "box" => "fedora/25-cloud-base"},
+	"centos" => {"units" => 1, "mem" => "512", "box" => "centos/7"},
+	"ubuntu" => {"units" => 0, "mem" => "512", "box" => "ubuntu/xenial64"},
+	"debian" => {"units" => 0, "mem" => "512", "box" => "debian/jessie64"},
+	"opensuse" => {"units" => 0, "mem" => "512", "box" => "opensuse/openSUSE-42.1-x86_64"},
+	"openwrt" => {"units" => 0, "mem" => "512", "box" => "ntrepid8/openwrt-15.05-x86"},
+	"arch" => {"units" => 0, "mem" => "512", "box" => "kaorimatz/archlinux-x86_64"},
+	"fedora" => {"units" => 0, "mem" => "512", "box" => "fedora/25-cloud-base"},
 }
 
 Vagrant.configure(2) do |config|
-
 	hosts.each do |distro, v|
 
-		# Immediately continue to next host type if number of boxes is zero.
-		# Avoids incrementing $ip_host needlessly.
-		if v["boxes"] == 0
-			next
-		end
+		# Create distro units (instances).
+		(1..v["units"]).each do |i|
 
-		(1..v["boxes"]).each do |i|
+			# Set variable to be used as *both* the vagrant machine
+			# name and the hostname.
 			name = "%s%d" % [distro, i]
 
 			config.vm.define name do |u|
 				u.vm.box = v["box"]
 				u.vm.hostname = name
-				u.vm.network "private_network", ip: "%s.%d" % [$ip_net, $ip_host]
+				u.vm.network "private_network", type: "dhcp"
 
 				u.vm.provider "virtualbox" do |vb|
 					vb.linked_clone = true
 					vb.gui = false
 					vb.memory = v["mem"]
+
+					# Workaround for issue with CentOS "epel-release" repo DNS resolution.
+					# "Error: Cannot retrieve metalink for repository: epel/x86_64. Please verify its path and try again"
+					# TODO: Determine issue's cause.
+					# Possibly due to using
+					# systemd-resolved for DNS and linking
+					# /usr/lib/systemd/resolv.conf to
+					# /etc/resolv.conf on host machine.
+					if distro == "centos"
+						vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+					end
 				end
 
-				if distro == "centos"
+				# Run distro-specific commands.
+				case distro
+				when "centos"
 					u.vm.provision "shell", inline: <<-SHELL
-						# CENTOS ONLY
-						# Work around CentOS network config issue (vagrant issue 5590)
-						# https://github.com/mitchellh/vagrant/issues/5590#issuecomment-105886361
-						echo '/usr/sbin/ifup eth1' >> /etc/rc.local
-
-						# Install packages
-						yum install -y bind-utils tree vim httpd httpd-tools mod_ssl php php-fpm
+						yum install -y epel-release
+						yum install -y bind-utils tree vim
 					SHELL
 				end
-
-				# Increment ip_host for next VM created.
-				$ip_host += 1
 			end
 		end
 	end
