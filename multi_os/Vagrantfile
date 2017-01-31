@@ -31,10 +31,11 @@ Vagrant.configure(2) do |config|
 					# Workaround for issue with CentOS "epel-release" repo DNS resolution.
 					# "Error: Cannot retrieve metalink for repository: epel/x86_64. Please verify its path and try again"
 					# TODO: Determine issue's cause.
-					# Possibly due to using
-					# systemd-resolved for DNS and linking
+					# Possibly due to *host* (NOT guest)
+					# machine using systemd-resolved for
+					# DNS and linking
 					# /usr/lib/systemd/resolv.conf to
-					# /etc/resolv.conf on host machine.
+					# /etc/resolv.conf.
 					if distro == "centos"
 						vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 					end
