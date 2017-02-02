@@ -1,6 +1,8 @@
 hosts = {
 	"centos" => {"units" => 1, "mem" => "512", "box" => "centos/7"},
+	"centos6" => {"units" => 0, "mem" => "512", "box" => "centos/6"},
 	"ubuntu" => {"units" => 0, "mem" => "512", "box" => "ubuntu/xenial64"},
+	"ubuntuTrusty" => {"units" => 0, "mem" => "512", "box" => "ubuntu/trusty64"},
 	"debian" => {"units" => 0, "mem" => "512", "box" => "debian/jessie64"},
 	"opensuse" => {"units" => 0, "mem" => "512", "box" => "opensuse/openSUSE-42.1-x86_64"},
 	"openwrt" => {"units" => 0, "mem" => "512", "box" => "ntrepid8/openwrt-15.05-x86"},
