@@ -8,6 +8,8 @@ hosts = {
 	"openwrt" 	=> {"units" => 0, "mem" => "512", "box" => "ntrepid8/openwrt-15.05-x86"},
 	"arch" 		=> {"units" => 0, "mem" => "512", "box" => "kaorimatz/archlinux-x86_64"},
 	"fedora" 	=> {"units" => 0, "mem" => "512", "box" => "fedora/25-cloud-base"},
+	"freebsd" 	=> {"units" => 0, "mem" => "512", "box" => "freebsd/FreeBSD-11.0-STABLE"},
+	"openbsd" 	=> {"units" => 0, "mem" => "512", "box" => "trombik/ansible-openbsd-6.0-amd64"},
 }
 
 Vagrant.configure(2) do |config|
