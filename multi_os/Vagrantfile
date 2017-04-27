@@ -8,7 +8,7 @@ hosts = {
 	"openwrt" 	=> {"units" => 0, "mem" => "512", "box" => "ntrepid8/openwrt-15.05-x86"},
 	"arch" 		=> {"units" => 1, "mem" => "512", "box" => "archlinux/archlinux"},
 	"fedora" 	=> {"units" => 0, "mem" => "512", "box" => "fedora/25-cloud-base"},
-	"freebsd" 	=> {"units" => 1, "mem" => "512", "box" => "freebsd/FreeBSD-11.0-STABLE"},
+	"freebsd" 	=> {"units" => 0, "mem" => "512", "box" => "freebsd/FreeBSD-11.0-STABLE"},
 	"openbsd" 	=> {"units" => 0, "mem" => "512", "box" => "SierraX/openbsd-6.1"},
 }
 
