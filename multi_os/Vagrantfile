@@ -9,7 +9,7 @@ hosts = {
 	"arch" 		=> {"units" => 0, "mem" => "512", "box" => "kaorimatz/archlinux-x86_64"},
 	"fedora" 	=> {"units" => 0, "mem" => "512", "box" => "fedora/25-cloud-base"},
 	"freebsd" 	=> {"units" => 1, "mem" => "512", "box" => "freebsd/FreeBSD-11.0-STABLE"},
-	"openbsd" 	=> {"units" => 1, "mem" => "512", "box" => "trombik/ansible-openbsd-6.0-amd64"},
+	"openbsd" 	=> {"units" => 0, "mem" => "512", "box" => "SierraX/openbsd-6.1"},
 }
 
 Vagrant.configure(2) do |config|
@@ -45,13 +45,27 @@ Vagrant.configure(2) do |config|
 					end
 				end
 
+
 				# Run distro-specific commands.
 				case distro
+				when "arch"
+					u.vm.provision "shell", inline: <<-END
+						hash python2 || pacman --noconfirm -S python2
+					END
+
 				when "centos"
-					u.vm.provision "shell", inline: <<-SHELL
+					u.vm.provision "shell", inline: <<-END
 						yum install -y epel-release
 						yum install -y bind-utils tree vim
-					SHELL
+					END
+				end
+
+				# Ansible provisioning
+				u.vm.provision "ansible" do |a|
+					a.playbook = "playbook.yml"
+					a.host_vars = {
+						"arch1" => {"ansible_python_interpreter" => "/usr/bin/python2" },
+					}
 				end
 			end
 		end
