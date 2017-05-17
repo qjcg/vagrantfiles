@@ -31,36 +31,9 @@ Vagrant.configure(2) do |config|
 					vb.linked_clone = true
 					vb.gui = false
 					vb.memory = v["mem"]
-
-					# Workaround for issue with CentOS "epel-release" repo DNS resolution.
-					# "Error: Cannot retrieve metalink for repository: epel/x86_64. Please verify its path and try again"
-					# TODO: Determine issue's cause.
-					# Possibly due to *host* (NOT guest)
-					# machine using systemd-resolved for
-					# DNS and linking
-					# /usr/lib/systemd/resolv.conf to
-					# /etc/resolv.conf.
-					if distro == "centos"
-						vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-					end
 				end
 
-
-				# Run distro-specific commands.
-				case distro
-				when "arch"
-					u.vm.provision "shell", inline: <<-END
-						hash python2 || pacman --noconfirm -S python2
-					END
-
-				when "centos"
-					u.vm.provision "shell", inline: <<-END
-						yum install -y epel-release
-						yum install -y bind-utils tree vim
-					END
-				end
-
-				# Ansible provisioning
+				# Ansible provisioning.
 				u.vm.provision "ansible" do |a|
 					a.playbook = "playbook.yml"
 					a.host_vars = {
