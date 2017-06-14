@@ -1,15 +1,20 @@
 hosts = {
-	"centos" 	=> {"units" => 0, "mem" => "512", "box" => "centos/7"},
-	"centos6" 	=> {"units" => 0, "mem" => "512", "box" => "centos/6"},
-	"ubuntu" 	=> {"units" => 0, "mem" => "512", "box" => "ubuntu/xenial64"},
-	"ubuntuTrusty" 	=> {"units" => 0, "mem" => "512", "box" => "ubuntu/trusty64"},
-	"debian" 	=> {"units" => 0, "mem" => "512", "box" => "debian/jessie64"},
-	"opensuse" 	=> {"units" => 0, "mem" => "512", "box" => "opensuse/openSUSE-42.1-x86_64"},
-	"openwrt" 	=> {"units" => 0, "mem" => "512", "box" => "ntrepid8/openwrt-15.05-x86"},
+	# tier 1
 	"arch" 		=> {"units" => 1, "mem" => "512", "box" => "archlinux/archlinux"},
-	"fedora" 	=> {"units" => 0, "mem" => "512", "box" => "fedora/25-cloud-base"},
-	"freebsd" 	=> {"units" => 0, "mem" => "512", "box" => "freebsd/FreeBSD-11.0-STABLE"},
-	"openbsd" 	=> {"units" => 0, "mem" => "512", "box" => "SierraX/openbsd-6.1"},
+	"centos" 	=> {"units" => 1, "mem" => "512", "box" => "centos/7"},
+	"centos6" 	=> {"units" => 1, "mem" => "512", "box" => "centos/6"},
+	"debian" 	=> {"units" => 1, "mem" => "512", "box" => "debian/jessie64"},
+	"ubuntu" 	=> {"units" => 1, "mem" => "512", "box" => "ubuntu/xenial64"},
+
+	# tier 2
+	"openwrt" 	=> {"units" => 1, "mem" => "512", "box" => "ntrepid8/openwrt-15.05-x86"},
+	"alpine" 	=> {"units" => 1, "mem" => "512", "box" => "generic/alpine36"},
+	"ubuntuTrusty" 	=> {"units" => 1, "mem" => "512", "box" => "ubuntu/trusty64"},
+	"opensuse" 	=> {"units" => 1, "mem" => "512", "box" => "opensuse/openSUSE-42.1-x86_64"},
+	"fedora" 	=> {"units" => 1, "mem" => "512", "box" => "fedora/25-cloud-base"},
+	"gentoo" 	=> {"units" => 1, "mem" => "512", "box" => "generic/gentoo"},
+	"freebsd" 	=> {"units" => 1, "mem" => "512", "box" => "freebsd/FreeBSD-11.0-STABLE"},
+	"openbsd" 	=> {"units" => 1, "mem" => "512", "box" => "SierraX/openbsd-6.1"},
 }
 
 Vagrant.configure(2) do |config|
