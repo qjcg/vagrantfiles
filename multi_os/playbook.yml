@@ -1,0 +1,15 @@
+- name: Demonstrate Ansible provisioning of Vagrant boxes
+  hosts: all
+  gather_facts: no
+  become: yes
+
+  roles:
+
+    # Install python2 for VM images that don't have it.
+    - bambocher.bootstrap
+
+  tasks:
+    - name: Create the /etc/motd file
+      copy:
+        dest: /etc/motd
+        content: "{{ lookup('file', 'files/ansible.motd') }}"

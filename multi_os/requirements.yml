@@ -1,0 +1,4 @@
+# Install these requirements by running:
+#   ansible-galaxy install -r requirements.yml
+
+- src: bambocher.bootstrap
