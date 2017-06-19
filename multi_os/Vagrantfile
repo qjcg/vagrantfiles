@@ -3,7 +3,7 @@ hosts = {
 	"arch" 		=> {"units" => 1, "mem" => "512", "box" => "archlinux/archlinux"},
 	"centos" 	=> {"units" => 1, "mem" => "512", "box" => "centos/7"},
 	"centos6" 	=> {"units" => 1, "mem" => "512", "box" => "centos/6"},
-	"debian" 	=> {"units" => 1, "mem" => "512", "box" => "debian/jessie64"},
+	"debian" 	=> {"units" => 1, "mem" => "512", "box" => "debian/stretch64"},
 	"ubuntu" 	=> {"units" => 1, "mem" => "512", "box" => "ubuntu/xenial64"},
 
 	# tier 2
