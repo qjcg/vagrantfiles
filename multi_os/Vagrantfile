@@ -1,26 +1,26 @@
 hosts = {
 	# tier 1
-	"arch" 		=> {"units" => 1, "mem" => "512", "box" => "archlinux/archlinux"},
-	"centos" 	=> {"units" => 1, "mem" => "512", "box" => "centos/7"},
-	"centos6_" 	=> {"units" => 1, "mem" => "512", "box" => "centos/6"},
-	"debian" 	=> {"units" => 1, "mem" => "512", "box" => "debian/stretch64"},
-	"ubuntu" 	=> {"units" => 1, "mem" => "512", "box" => "ubuntu/xenial64"},
+	"arch"		=> {"units" => 1, "mem" => "512", "box" => "archlinux/archlinux"},
+	"centos"	=> {"units" => 1, "mem" => "512", "box" => "centos/7"},
+	"centos6_"	=> {"units" => 1, "mem" => "512", "box" => "centos/6"},
+	"debian"	=> {"units" => 1, "mem" => "512", "box" => "debian/stretch64"},
+	"ubuntu"	=> {"units" => 1, "mem" => "512", "box" => "ubuntu/xenial64"},
 
 	# tier 2
-	"openwrt" 	=> {"units" => 1, "mem" => "512", "box" => "ntrepid8/openwrt-15.05-x86"},
-	"alpine" 	=> {"units" => 1, "mem" => "512", "box" => "generic/alpine36"},
-	"ubuntuTrusty" 	=> {"units" => 1, "mem" => "512", "box" => "ubuntu/trusty64"},
-	"opensuse" 	=> {"units" => 1, "mem" => "512", "box" => "opensuse/openSUSE-42.1-x86_64"},
-	"fedora" 	=> {"units" => 1, "mem" => "512", "box" => "fedora/25-cloud-base"},
-	"gentoo" 	=> {"units" => 1, "mem" => "512", "box" => "generic/gentoo"},
-	"freebsd" 	=> {"units" => 1, "mem" => "512", "box" => "freebsd/FreeBSD-11.0-STABLE"},
-	"openbsd" 	=> {"units" => 1, "mem" => "512", "box" => "SierraX/openbsd-6.1"},
+	"openwrt"	=> {"units" => 1, "mem" => "512", "box" => "ntrepid8/openwrt-15.05-x86"},
+	"alpine"	=> {"units" => 1, "mem" => "512", "box" => "generic/alpine36"},
+	"ubuntuTrusty"	=> {"units" => 1, "mem" => "512", "box" => "ubuntu/trusty64"},
+	"opensuse"	=> {"units" => 1, "mem" => "512", "box" => "opensuse/openSUSE-42.1-x86_64"},
+	"fedora"	=> {"units" => 1, "mem" => "512", "box" => "fedora/25-cloud-base"},
+	"gentoo"	=> {"units" => 1, "mem" => "512", "box" => "generic/gentoo"},
+	"freebsd"	=> {"units" => 1, "mem" => "512", "box" => "freebsd/FreeBSD-11.0-STABLE"},
+	"openbsd"	=> {"units" => 1, "mem" => "512", "box" => "SierraX/openbsd-6.1"},
 
 	# windows
-	"win7_" 		=> {"units" => 1, "mem" => "512", "box" => "opentable/win-7-professional-amd64-nocm"},
-	"win8_" 		=> {"units" => 1, "mem" => "512", "box" => "opentable/win-8.1-enterprise-amd64-nocm"},
-	"win2008_" 	=> {"units" => 1, "mem" => "512", "box" => "opentable/win-2008r2-standard-amd64-nocm"},
-	"win2012_" 	=> {"units" => 1, "mem" => "512", "box" => "opentable/win-2012r2-standard-amd64-nocm"},
+	"win7_"		=> {"units" => 1, "mem" => "512", "box" => "opentable/win-7-professional-amd64-nocm"},
+	"win8_"		=> {"units" => 1, "mem" => "512", "box" => "opentable/win-8.1-enterprise-amd64-nocm"},
+	"win2008_"	=> {"units" => 1, "mem" => "512", "box" => "opentable/win-2008r2-standard-amd64-nocm"},
+	"win2012_"	=> {"units" => 1, "mem" => "512", "box" => "opentable/win-2012r2-standard-amd64-nocm"},
 }
 
 Vagrant.configure(2) do |config|
