@@ -14,7 +14,7 @@ hosts = {
 	"fedora"	=> {"units" => 1, "mem" => "512", "box" => "fedora/25-cloud-base"},
 	"gentoo"	=> {"units" => 1, "mem" => "512", "box" => "generic/gentoo"},
 	"freebsd"	=> {"units" => 1, "mem" => "512", "box" => "freebsd/FreeBSD-11.0-STABLE"},
-	"openbsd"	=> {"units" => 1, "mem" => "512", "box" => "SierraX/openbsd-6.1"},
+	"openbsd"	=> {"units" => 1, "mem" => "512", "box" => "generic/openbsd6"},
 
 	# windows
 	"win7_"		=> {"units" => 1, "mem" => "512", "box" => "opentable/win-7-professional-amd64-nocm"},
