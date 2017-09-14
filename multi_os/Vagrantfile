@@ -18,10 +18,10 @@ hosts = {
 	"openbsd"	=> {"units" => 1, "mem" => "512", "box" => "generic/openbsd6"},
 
 	# windows
-	"win7_"		=> {"units" => 1, "mem" => "512", "box" => "opentable/win-7-professional-amd64-nocm"},
-	"win8_"		=> {"units" => 1, "mem" => "512", "box" => "opentable/win-8.1-enterprise-amd64-nocm"},
-	"win2008_"	=> {"units" => 1, "mem" => "512", "box" => "opentable/win-2008r2-standard-amd64-nocm"},
-	"win2012_"	=> {"units" => 1, "mem" => "512", "box" => "opentable/win-2012r2-standard-amd64-nocm"},
+	"win7"		=> {"units" => 1, "mem" => "512", "box" => "opentable/win-7-professional-amd64-nocm"},
+	"win8"		=> {"units" => 1, "mem" => "512", "box" => "opentable/win-8.1-enterprise-amd64-nocm"},
+	"win2008"	=> {"units" => 1, "mem" => "512", "box" => "opentable/win-2008r2-standard-amd64-nocm"},
+	"win2012"	=> {"units" => 1, "mem" => "512", "box" => "opentable/win-2012r2-standard-amd64-nocm"},
 }
 
 Vagrant.configure(2) do |config|
