@@ -3,7 +3,7 @@ hosts = {
 	"arch"		=> {"units" => 1, "mem" => "512", "box" => "archlinux/archlinux"},
 	"centos"	=> {"units" => 1, "mem" => "512", "box" => "centos/7"},
 	"rhel"		=> {"units" => 1, "mem" => "512", "box" => "generic/rhel7"},
-	"centos6_"	=> {"units" => 1, "mem" => "512", "box" => "centos/6"},
+	"centos6"	=> {"units" => 1, "mem" => "512", "box" => "centos/6"},
 	"debian"	=> {"units" => 1, "mem" => "512", "box" => "debian/stretch64"},
 	"ubuntu"	=> {"units" => 1, "mem" => "512", "box" => "ubuntu/xenial64"},
 
@@ -32,7 +32,7 @@ Vagrant.configure(2) do |config|
 
 			# Set variable to be used as *both* the vagrant machine
 			# name and the hostname.
-			name = "%s%d" % [distro, i]
+			name = "%s-%d" % [distro, i]
 
 			config.vm.define name do |u|
 				u.vm.box = v["box"]
