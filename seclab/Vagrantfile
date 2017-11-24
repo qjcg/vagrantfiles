@@ -1,85 +1,41 @@
-$ncentos = 1
-$nubuntu = 0
+hosts = {
+	"kali"			=> {"units" => 1, "mem" => "2048", "box" => "Sliim/kali-2017.2-light-amd64", "key" => "pentest-env"},
+	"ms2"			=> {"units" => 1, "mem" =>  "512", "box" => "Sliim/metasploitable2", "key" => "pentest-env"},
+
+	"centos-7"		=> {"units" => 1, "mem" =>  "512", "box" => "centos/7"},
+	"centos-6"		=> {"units" => 1, "mem" =>  "512", "box" => "centos/6"},
+	"ubuntu-xenial"		=> {"units" => 1, "mem" =>  "512", "box" => "bento/ubuntu-16.04"},
+	"ubuntu-trusty"		=> {"units" => 1, "mem" =>  "512", "box" => "bento/ubuntu-14.04"},
+}
 
 Vagrant.configure(2) do |config|
+	hosts.each do |distro, v|
 
-	# ubuntu
-	(1..$nubuntu).each do |i|
-		name = "%s%d" % ["ubuntu", i]
-		config.vm.define name, autostart: false do |u|
-			u.vm.box = "ubuntu/trusty64"
-			u.vm.hostname = name
-			u.vm.network "private_network", ip: "172.16.189.#{110 + i}"
-			u.vm.boot_timeout = 60
+		# Create distro units (instances).
+		(1..v["units"]).each do |i|
 
-			u.vm.provider "virtualbox" do |vb|
-				vb.linked_clone = true
-				vb.gui = false
-				vb.memory = "512"
+			# Set variable to be used as *both* the vagrant machine
+			# name and the hostname.
+			name = "%s-%d" % [distro, i]
+
+			config.vm.define name do |u|
+				u.vm.box = v["box"]
+				u.vm.hostname = name
+				u.vm.network "private_network", type: "dhcp"
+
+				# If provided above, use username/password auth instead of key-based
+				if v.key?("key")
+					u.ssh.username   = "root"
+					u.ssh.private_key_path   = v["key"]
+				end
+
+
+				u.vm.provider "virtualbox" do |vb|
+					vb.linked_clone = true
+					vb.gui = false
+					vb.memory = v["mem"]
+				end
 			end
-		end
-	end
-
-	# centos
-	(1..$ncentos).each do |i|
-		name = "%s%d" % ["centos", i]
-		config.vm.define name, autostart: false do |c|
-			c.vm.box = "centos/7"
-			c.vm.hostname = name
-			c.vm.network "private_network", ip: "172.16.189.#{120 + i}", :adapter => 3
-			c.vm.boot_timeout = 60
-
-			c.vm.provider "virtualbox" do |vb|
-				vb.linked_clone = true
-				vb.gui = false
-				vb.memory = "512"
-			end
-
-			c.vm.provision "shell", inline: <<-SHELL
-				yum install -y epel-release bind-utils docker git mtr tmux tree vim bzip2
-				systemctl enable docker
-				systemctl start docker
-			SHELL
-		end
-	end
-
-	# metasploitable 2
-	# via https://github.com/waratek/vagrant-boxes/blob/master/Vagrantfiles/metasploitable2/Vagrantfile
-	config.vm.define "metasploitable2", autostart: false do |m|
-		m.vm.box = "metasploitable2"
-		m.vm.hostname = "metasploitable2"
-		m.vm.box_url = "https://s3-eu-west-1.amazonaws.com/waratek-vagrant-boxes/metasploitable2_virtualbox.box"
-		m.vm.box_download_checksum = "feacd783225859336ef3dc9ca620a5c3"
-		m.vm.box_download_checksum_type = "md5"
-		m.vm.guest = "ubuntu"
-		m.vm.network "private_network", ip: "172.16.189.131", :adapter => 3
-
-		m.vm.provider "virtualbox" do |vb|
-			vb.linked_clone = true
-			vb.customize ["modifyvm", :id, "--biosbootmenu", "disabled"]
-			vb.customize ["modifyvm", :id, "--bioslogodisplaytime", "0"]
-			vb.customize ["modifyvm", :id, "--bioslogofadein", "off"]
-			vb.customize ["modifyvm", :id, "--bioslogofadeout", "off"]
-			vb.customize ["modifyvm", :id, "--cpus", "2"]
-			vb.customize ["modifyvm", :id, "--ioapic", "on"]
-			vb.customize ["modifyvm", :id, "--memory", "512"]
-			vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
-			vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
-		end
-	end
-
-	# kali
-	config.vm.define "kali", autostart: false do |k|
-		k.vm.box = "starflame/kali2_linux4.0.0_amd64"
-		k.vm.hostname = "kali"
-		# needed for network config to work
-		k.vm.guest = :debian
-		k.vm.network "private_network", ip: "172.16.189.141", :adapter => 3
-		k.vm.boot_timeout = 9999
-		k.vm.provider "virtualbox" do |vb|
-			vb.linked_clone = true
-			vb.gui = false
-			vb.memory = "2048"
 		end
 	end
 end
