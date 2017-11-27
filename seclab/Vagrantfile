@@ -1,10 +1,10 @@
 hosts = {
-	"kali"			=> {"units" => 1, "mem" => "2048", "box" => "Sliim/kali-2017.2-light-amd64", "key" => "pentest-env"},
-	"ms2"			=> {"units" => 1, "mem" =>  "512", "box" => "Sliim/metasploitable2", "key" => "pentest-env"},
+	"kali"			=> {"units" => 1, "mem" => "2048", "box" => "tonijaaskelainen/kali", "ssh_username" => "root", "ssh_password" => "toor"},
+	"ms2"			=> {"units" => 1, "mem" =>  "512", "box" => "tonijaaskelainen/ms2",  "ssh_username" => "msfadmin", "ssh_password" => "msfadmin"},
 
 	"centos-7"		=> {"units" => 1, "mem" =>  "512", "box" => "centos/7"},
 	"centos-6"		=> {"units" => 1, "mem" =>  "512", "box" => "centos/6"},
-	"ubuntu-xenial"		=> {"units" => 1, "mem" =>  "512", "box" => "bento/ubuntu-16.04"},
+	"ubuntu-xenial"		=> {"units" => 2, "mem" =>  "512", "box" => "bento/ubuntu-16.04"},
 	"ubuntu-trusty"		=> {"units" => 1, "mem" =>  "512", "box" => "bento/ubuntu-14.04"},
 }
 
@@ -24,9 +24,9 @@ Vagrant.configure(2) do |config|
 				u.vm.network "private_network", type: "dhcp"
 
 				# If provided above, use username/password auth instead of key-based
-				if v.key?("key")
-					u.ssh.username   = "root"
-					u.ssh.private_key_path   = v["key"]
+				if v.key?("ssh_username")
+					u.ssh.username   = v["ssh_username"]
+					u.ssh.password   = v["ssh_password"]
 				end
 
 
