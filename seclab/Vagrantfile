@@ -2,10 +2,11 @@ hosts = {
 	"kali"			=> {"units" => 1, "mem" => "2048", "box" => "tonijaaskelainen/kali", "ssh_username" => "root", "ssh_password" => "toor"},
 	"ms2"			=> {"units" => 1, "mem" =>  "512", "box" => "tonijaaskelainen/ms2",  "ssh_username" => "msfadmin", "ssh_password" => "msfadmin"},
 
-	"centos-7"		=> {"units" => 1, "mem" =>  "512", "box" => "centos/7"},
-	"centos-6"		=> {"units" => 1, "mem" =>  "512", "box" => "centos/6"},
-	"ubuntu-xenial"		=> {"units" => 2, "mem" =>  "512", "box" => "bento/ubuntu-16.04"},
-	"ubuntu-trusty"		=> {"units" => 1, "mem" =>  "512", "box" => "bento/ubuntu-14.04"},
+	"centos-7"		=> {"units" => 0, "mem" =>  "512", "box" => "centos/7"},
+	"centos-6"		=> {"units" => 0, "mem" =>  "512", "box" => "centos/6"},
+	"ubuntu-xenial"		=> {"units" => 3, "mem" =>  "512", "box" => "bento/ubuntu-16.04"},
+	"ubuntu-trusty"		=> {"units" => 0, "mem" =>  "512", "box" => "bento/ubuntu-14.04"},
+	"ubuntu-precise"	=> {"units" => 0, "mem" =>  "512", "box" => "bento/ubuntu-12.04"},
 }
 
 Vagrant.configure(2) do |config|
