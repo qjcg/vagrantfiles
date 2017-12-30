@@ -1,27 +1,27 @@
 hosts = {
 	# tier 1
-	"arch"		=> {"units" => 1, "mem" => "512", "box" => "archlinux/archlinux"},
-	"centos"	=> {"units" => 1, "mem" => "512", "box" => "centos/7"},
-	"rhel"		=> {"units" => 1, "mem" => "512", "box" => "generic/rhel7"},
-	"centos6"	=> {"units" => 1, "mem" => "512", "box" => "centos/6"},
-	"debian"	=> {"units" => 1, "mem" => "512", "box" => "debian/stretch64"},
-	"ubuntu"	=> {"units" => 1, "mem" => "512", "box" => "ubuntu/xenial64"},
+	"arch"		=> {"units" => 2, "mem" => "512", "box" => "archlinux/archlinux"},
+	"centos"	=> {"units" => 0, "mem" => "512", "box" => "centos/7"},
+	"rhel"		=> {"units" => 0, "mem" => "512", "box" => "generic/rhel7"},
+	"centos6"	=> {"units" => 0, "mem" => "512", "box" => "centos/6"},
+	"debian"	=> {"units" => 0, "mem" => "512", "box" => "debian/contrib-stretch64"},
+	"ubuntu"	=> {"units" => 0, "mem" => "512", "box" => "bento/ubuntu-16.04"},
 
 	# tier 2
-	"openwrt"	=> {"units" => 1, "mem" => "512", "box" => "ntrepid8/openwrt-15.05-x86"},
-	"alpine"	=> {"units" => 1, "mem" => "512", "box" => "generic/alpine36"},
-	"ubuntuTrusty"	=> {"units" => 1, "mem" => "512", "box" => "ubuntu/trusty64"},
-	"opensuse"	=> {"units" => 1, "mem" => "512", "box" => "opensuse/openSUSE-42.1-x86_64"},
-	"fedora"	=> {"units" => 1, "mem" => "512", "box" => "fedora/25-cloud-base"},
-	"gentoo"	=> {"units" => 1, "mem" => "512", "box" => "generic/gentoo"},
-	"freebsd"	=> {"units" => 1, "mem" => "512", "box" => "freebsd/FreeBSD-11.0-STABLE"},
-	"openbsd"	=> {"units" => 1, "mem" => "512", "box" => "generic/openbsd6"},
+	"openwrt"	=> {"units" => 0, "mem" => "512", "box" => "ntrepid8/openwrt-15.05-x86"},
+	"alpine"	=> {"units" => 0, "mem" => "512", "box" => "generic/alpine36"},
+	"ubuntuTrusty"	=> {"units" => 0, "mem" => "512", "box" => "bento/ubuntu-14.04"},
+	"opensuse"	=> {"units" => 0, "mem" => "512", "box" => "opensuse/openSUSE-42.1-x86_64"},
+	"fedora"	=> {"units" => 0, "mem" => "512", "box" => "fedora/27-cloud-base"},
+	"gentoo"	=> {"units" => 0, "mem" => "512", "box" => "generic/gentoo"},
+	"freebsd"	=> {"units" => 0, "mem" => "512", "box" => "freebsd/FreeBSD-11.0-STABLE"},
+	"openbsd"	=> {"units" => 0, "mem" => "512", "box" => "generic/openbsd6"},
 
 	# windows
-	"win7"		=> {"units" => 1, "mem" => "512", "box" => "opentable/win-7-professional-amd64-nocm"},
-	"win8"		=> {"units" => 1, "mem" => "512", "box" => "opentable/win-8.1-enterprise-amd64-nocm"},
-	"win2008"	=> {"units" => 1, "mem" => "512", "box" => "opentable/win-2008r2-standard-amd64-nocm"},
-	"win2012"	=> {"units" => 1, "mem" => "512", "box" => "opentable/win-2012r2-standard-amd64-nocm"},
+	"win7"		=> {"units" => 0, "mem" => "512", "box" => "opentable/win-7-professional-amd64-nocm"},
+	"win8"		=> {"units" => 0, "mem" => "512", "box" => "opentable/win-8.1-enterprise-amd64-nocm"},
+	"win2008"	=> {"units" => 0, "mem" => "512", "box" => "opentable/win-2008r2-standard-amd64-nocm"},
+	"win2012"	=> {"units" => 0, "mem" => "512", "box" => "opentable/win-2012r2-standard-amd64-nocm"},
 }
 
 Vagrant.configure(2) do |config|
