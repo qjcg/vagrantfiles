@@ -9,12 +9,12 @@ hosts = {
 
 	# tier 2
 	"openwrt"	=> {"units" => 0, "mem" => "512", "box" => "ntrepid8/openwrt-15.05-x86"},
-	"alpine"	=> {"units" => 0, "mem" => "512", "box" => "generic/alpine36"},
+	"alpine"	=> {"units" => 0, "mem" => "512", "box" => "generic/alpine37"},
 	"ubuntuTrusty"	=> {"units" => 0, "mem" => "512", "box" => "bento/ubuntu-14.04"},
 	"opensuse"	=> {"units" => 0, "mem" => "512", "box" => "opensuse/openSUSE-42.1-x86_64"},
 	"fedora"	=> {"units" => 0, "mem" => "512", "box" => "fedora/27-cloud-base"},
 	"gentoo"	=> {"units" => 0, "mem" => "512", "box" => "generic/gentoo"},
-	"freebsd"	=> {"units" => 0, "mem" => "512", "box" => "freebsd/FreeBSD-11.0-STABLE"},
+	"freebsd"	=> {"units" => 0, "mem" => "512", "box" => "freebsd/FreeBSD-11.1-STABLE"},
 	"openbsd"	=> {"units" => 0, "mem" => "512", "box" => "generic/openbsd6"},
 
 	# windows
