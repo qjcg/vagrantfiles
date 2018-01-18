@@ -11,5 +11,5 @@
   tasks:
     - name: Create the /etc/motd file
       copy:
+        src: files/ansible.motd
         dest: /etc/motd
-        content: "{{ lookup('file', 'files/ansible.motd') }}"
