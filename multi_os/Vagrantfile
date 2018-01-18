@@ -49,8 +49,11 @@ Vagrant.configure(2) do |config|
 				u.vm.provision "ansible" do |a|
 					a.compatibility_mode = "2.0"
 					a.playbook = "playbook.yml"
-					a.host_vars = {
-						"arch1" => {"ansible_python_interpreter" => "/usr/bin/python2" },
+
+					# Ensure Arch Linux hosts use python2 as their interpreter.
+					a.groups = {
+						"arch" => ["arch-[1:5]"],
+						"arch:vars" => {"ansible_python_interpreter" => "/usr/bin/python2"},
 					}
 				end
 			end
